@@ -1,6 +1,6 @@
 title: Immersive Tutorials
 description: >
-baseurl: "/immersiveTutorials" # the subpath of your site, e.g. /blog
+baseurl: "/Education-Immersive-Tutorials" # the subpath of your site, e.g. /blog
 url: "cornelldatascience.github.io" # the base hostname & protocol for your site
 plugin:
   - jekyll-seo-tag

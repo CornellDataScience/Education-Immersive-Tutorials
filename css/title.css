@@ -1,0 +1,24 @@
+.defaultTitle {
+        background-color: #d3d3d347;
+        height: 15vh;
+        line-height: 15vh;
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+}
+
+.defaultTitleItem {
+        height: 8vh;
+        padding-left: 5vw;
+}
+
+.defaultTitleItem * {
+        font-size: 20px;
+        color: #00000078;
+}
+
+.defaultTitleItem .textHeightIcon {
+        height:5vh;
+        padding-bottom:1vh;
+}

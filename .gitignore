@@ -1,3 +1,8 @@
-Gemfile.lock
-**/_site/
-**/.ipynb_checkpoints/
+**/.DS_Store
+src/static/dist
+**/node_modules/
+**/*.log
+.vscode/
+**/*.d.ts
+dist/
+**.*/.ipynb_checkpoints/

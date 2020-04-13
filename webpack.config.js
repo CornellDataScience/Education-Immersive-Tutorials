@@ -1,6 +1,8 @@
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const TerserJSPlugin = require('terser-webpack-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 const path_to_favicon = "src/assets/cds-logo.png";
 
@@ -94,6 +96,19 @@ const config = {
         path: __dirname + '/dist/',
         filename: 'js/[name].bundle.js',
     },
+    optimization: {
+        splitChunks: {
+            cacheGroups: {
+                commons: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: 'vendors',
+                    chunks: 'all',
+                    // maxSize: 500000
+                }
+            }
+        },
+        minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],
+    },
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.jsx', '.css'],
         alias: {
@@ -115,6 +130,7 @@ const config = {
                 use: [
                     { loader: "style-loader" },
                     { loader: "css-modules-typescript-loader" },
+                    { loader: MiniCssExtractPlugin.loader },
                     { loader: "css-loader", options: { modules: true } }
                 ]
             },

@@ -1,5 +1,8 @@
 import React from 'react';
-import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
+// import { Navbar, Nav, NavDropdown } from 'react-bootstrap/lib/Navbar';
+import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
+import NavDropdown from 'react-bootstrap/NavDropdown';
 import webconfig from './constants/webconfig';
 import * as stylesMain from '../styles/main.css';
 import { Project } from './constants/crossProjectInfo';

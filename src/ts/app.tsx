@@ -4,8 +4,7 @@ import ReactDOM from 'react-dom';
 import Markdown from './markdown';
 import webconfig from './constants/webconfig';
 import MainBase from './mainBase'
-import { NavDropdown, Nav } from "react-bootstrap";
-import { Project } from './constants/crossProjectInfo'
+import Nav from "react-bootstrap/Nav";
 
 const tanmayImages: React.ReactNode = <Nav.Link href="https://www.google.com/search?tbm=isch&q=tanmay+bansal">Google search of "tanmay bansal"</Nav.Link>;
 

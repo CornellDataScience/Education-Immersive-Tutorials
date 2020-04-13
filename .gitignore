@@ -6,3 +6,4 @@ src/static/dist
 **/*.d.ts
 dist/
 **.*/.ipynb_checkpoints/
+stats.json

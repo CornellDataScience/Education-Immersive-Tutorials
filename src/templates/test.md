@@ -7,4 +7,3 @@ Text
 
 [internal link (to a blank page)]({{ template SVM index.html }})
 
-

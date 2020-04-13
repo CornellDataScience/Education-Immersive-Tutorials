@@ -8,7 +8,12 @@
     "outDir": "dist/js",
     "jsx": "react",
     "strictNullChecks": true,
-    "plugins": [{ "name": "typescript-plugin-css-modules" }]
+    "plugins": [{ "name": "typescript-plugin-css-modules" }],
+    "baseUrl": ".",
+    "paths": {
+        "@Main/*": ["src/*"],
+        "@Projects/*": ["src/projects/*"]
+    }
   },
   "lib": ["es2015"]
 }

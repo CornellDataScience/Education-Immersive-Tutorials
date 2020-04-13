@@ -1,7 +1,3 @@
----
-layout:
----
-
 /* http://getbootstrap.com/components/#navbar-fixed-top */
 body {
   padding-top: calc(15vh + 10px);
@@ -12,16 +8,6 @@ footer {
   padding-top:    4%;
   padding-bottom: 4%;
 }
-
-{% if site.pygments_theme %}
-  {% for theme in site.data.pygments_themes %}
-    {% if site.pygments_theme == theme.name %}
-pre[class^="highlight"] {
-  background-color: {{ theme.background }};
-}
-    {% endif %}
-  {% endfor %}
-{% endif %}
 
 /* http://stackoverflow.com/a/22949489/3814202 */
 .carousel-control {

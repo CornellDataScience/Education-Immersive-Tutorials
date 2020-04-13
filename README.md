@@ -13,7 +13,7 @@ Running `npm run deploy` updates the website by pushing `dist` to the Github und
 
 Inside src, there is one folder called `projects` and 4 other folders. Tiles go into one of these 4 folders, dependent on the filetype:
 - `assets`: Miscellaneous files. csv's, images, etc.
-- `styles`: css files (TODO: This is not set up in webpack.config.js, so CSS files don't work yet.)
+- `styles`: css files. There are also .css.d.ts files generated during compiletime. No need to touch those.
 - `templates`: html and markdown files ONLY. (Other files in here will be ignored)
 - `ts`: Typescript files
 
@@ -27,9 +27,12 @@ One final note: Every `templates` directory should have an `index.html`. This in
 
 ### Creating a new page
 
-1. Create an html file that has the following line in it: "<script src="js/index.bundle.js" type="text/javascript"></script>".
-2. Create a typescript file that uses ReactDOM to inject React into that html page. For examples, you can look at src/templates/index.html and src/ts/app.tsx.
-
+1. Create an html file that has the following two lines in it: 
+- <script src="js/index.bundle.js" type="text/javascript"></script>
+- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+2. Create a typescript file that uses ReactDOM to inject React into that html page. For examples, you can look at src/templates/index.html and src/ts/app.tsx. The first line of this typescript file should use include the following line:
+`import 'bootstrap/dist/css/bootstrap.min.css';`
+3. Add that typescript file to `entry` in `webpack.config.js`. 
 
 ### Webpage links
 
@@ -45,7 +48,9 @@ One option for deploying locally:
 - go into`dist`
 - `python3 -m http.server`
 
-Going to localhost:8000/SVM.html in a browser will pull up the webpage corresponding to src/projects/SVM/templates/index.html. When the project is deployed to the Github Pages website, you can replace "localhost:8000" with "https://github.com/CornellDataScience/Education-Immersive-Tutorials" to see the corresponding webpage.
+Going to 0.0.0.0:8000/SVM.html in a browser will pull up the webpage corresponding to src/projects/SVM/templates/index.html. When the project is deployed to the Github Pages website, you can replace "0.0.0.0:8000" with "https://github.com/CornellDataScience/Education-Immersive-Tutorials" to see the corresponding webpage.
+
+You should use 0.0.0.0:8000, not localhost:8000. Using localhost will cause links to other files within this repo to break (because of CORS policies).
 
 ### Publishing
 
@@ -53,18 +58,21 @@ Going to localhost:8000/SVM.html in a browser will pull up the webpage correspon
 
 ### Important caveats
 
+- When changing CSS files, you should run `npm run dev-build` instead of `npm run build`.
 - When linking to other sources within the repo, always use the functions in `src/constants/'. The one exception is typescript `import` statements -- you can use those normally.
 - It's not recommended to have many html files.
 - In each of the 4 required folders (`assets`,`styles`,`templates`,`ts`) for each project, subdirectories are flattened out. So, `ts/component1/main.ts` and `ts/component2/main.ts` will clash -- don't let this happen.
 - async functions don't work, because something is messed up with this codebase's configurations
 - File and folder names can't have spaces.
+- Typescript won't be able to detect changes to CSS files by itself. If you're receiving errors related to importing CSS files or using newly written classes from imported CSS files, then run `npm run build`.
 
 ### Useful Tools and Conventions
 
-TODO
+- Two import shortcuts are set up: @Main and @Projects. @Main points to src and @Projects points to src/projects. So, when importing in Typescript, you can do something like `import webconfig from @Main/ts/webconfig"`. Instead of using a huge relative path.
+- Aside from `npm run build` and `npm run build-fast`, and `npm run deploy`, there is one more command: `npm run build-fast`. This skips CSS files and also skips Typescript integration, and therefore is about twice as fast as `npm run build`. It's good for checking how small changes affect the webpage on localhost. Always use full `npm run build` when pulling changes from Github and before pushing changes to Github.
 
 # Creating a new tutorial project
 - Add a folder to src/projects, with the 4 required folders.
 - In src/ts/constants/crossProjectInfo.ts, add a new entry to the enum `Project`. Also add a new string to `ProjectDirName`.
 - Edit src/index.tsx` to add this new project to the homepage.
-
+- Follow the instructions in "Creating a new page".

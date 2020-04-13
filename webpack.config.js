@@ -2,32 +2,41 @@ const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
+const path_to_favicon = "src/assets/cds-logo.png";
+
 const base_url = process.env.NODE_ENV == "production" ?
     "https://dylantsai.github.io/bookish-journey"
     : "http://0.0.0.0:8000"
 
+// matches webconfig.ts! If you change this, change webconfig.ts
 function make_path(match, templateOrAsset, project, fileNameWithExtension) {
-    if (templateOrAsset == "template") {
-        if (fileNameWithExtension.endsWith(".html")) {
-            if (fileNameWithExtension === "index.html") {
-                const url_suffix = project == "main" ? "" : project
-                return base_url + "/" + url_suffix
-            }
-            return base_url + "/" + fileNameWithExtension;
-        }
-        return base_url + "/templates/" + project + "/" + fileNameWithExtension;
+    if (templateOrAsset == "asset") {
+        return `${base_url}/assets/${project}/${fileNameWithExtension}`;
     }
-    return base_url + "/assets/" + project + fileNameWithExtension;
+    // make and return url
+    if (fileNameWithExtension == "index.html") {
+        let project_urlPiece = project == "main" ? "" : project = "/" + project + ".html";
+        return `${base_url}${project_urlPiece}`;
+    }
+    if (fileNameWithExtension.endsWith(".html")) {
+        return `${base_url}/${fileNameWithExtension}`;
+    }
+    return `${base_url}/templates/${project}/${fileNameWithExtension}`;
 }
 
 function transform_md(content) {
-    return content.toString().replace(/{{[^\s]+([^\s]+)[^\s]+([^\s]+)[^\s]+([^\s]+)[^\s]+}}/g, make_path);
+    return content.toString().replace(/{{[\s]+([^\s]+)[\s]+([^\s]+)[\s]+([^\s]+)[\s]+}}/g, make_path);
 }
 
 const config = {
     plugins: [
         new MiniCssExtractPlugin(),
         new CopyPlugin([
+            {
+                // copy favicon
+                from: __dirname + "/" + path_to_favicon,
+                to: __dirname + '/dist/favicon.ico'
+            },
             {
                 // copy main html file
                 from: __dirname + '/src/templates/*.html',
@@ -39,7 +48,7 @@ const config = {
                 to: __dirname + '/dist/templates/main/[name].[ext]',
                 ignore: ["*.html"],
                 transform(content, path) {
-                    return transform_md(content)
+                    return transform_md(content);
                 }
             },
             {
@@ -84,7 +93,11 @@ const config = {
         filename: 'js/[name].bundle.js',
     },
     resolve: {
-        extensions: ['.ts', '.tsx', '.js', '.jsx', '.css']
+        extensions: ['.ts', '.tsx', '.js', '.jsx', '.css'],
+        alias: {
+            "@Main": __dirname + '/src/',
+            "@Projects": __dirname + '/src/projects'
+        }
     },
     module: {
         rules: [
@@ -97,10 +110,8 @@ const config = {
             },
             {
                 test: /\.css$/,
-                // exclude: /node_modules/,
                 use: [
                     { loader: "style-loader" },
-                    { loader: "@teamsupercell/typings-for-css-modules-loader" },
                     { loader: "css-modules-typescript-loader" },
                     { loader: "css-loader", options: { modules: true } }
                 ]
@@ -115,8 +126,5 @@ const config = {
             }
         ]
     },
-    node: { // workaround for bug in webpack
-        fs: 'empty'
-    }
 };
 module.exports = config;

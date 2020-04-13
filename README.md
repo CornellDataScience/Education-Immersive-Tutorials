@@ -28,11 +28,11 @@ One final note: Every `templates` directory should have an `index.html`. This in
 ### Creating a new page
 
 1. Create an html file that has the following two lines in it: 
-- <script src="js/index.bundle.js" type="text/javascript"></script>
-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+- `<script src="js/PAGE_NAME.bundle.js" type="text/javascript"></script>`, where PAGE\_NAME whatever you want to call the page. You probably want the project that it's part of somewhere in the name.
+- `<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />`
 2. Create a typescript file that uses ReactDOM to inject React into that html page. For examples, you can look at src/templates/index.html and src/ts/app.tsx. The first line of this typescript file should use include the following line:
 `import 'bootstrap/dist/css/bootstrap.min.css';`
-3. Add that typescript file to `entry` in `webpack.config.js`. 
+3. Add that typescript file to `entry` in `webpack.config.js`, with the format `PAGE\_NAME: path_to_that_typescript_file`. 
 
 ### Webpage links
 

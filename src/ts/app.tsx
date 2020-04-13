@@ -4,20 +4,17 @@ import ReactDOM from 'react-dom';
 import Markdown from './markdown';
 import webconfig from './constants/webconfig';
 import MainBase from './mainBase'
-import { NavDropdown } from "react-bootstrap";
+import { NavDropdown, Nav } from "react-bootstrap";
 import { Project } from './constants/crossProjectInfo'
 
-const navbarTutorialDropdown: React.ReactNode =
-  <NavDropdown id="navbar-tutorial-dropdown" title="Tutorials" key="navbar-tutorial-dropdown">
-    <NavDropdown.Item key="navbar-tutorial-dropdown-svm" href={webconfig.template_link(Project.SVM)}>Support Vector Machines</NavDropdown.Item>
-    <NavDropdown.Item key="navbar-tutorial-dropdown-network" href={webconfig.template_link(Project.Network)}>Network Analysis</NavDropdown.Item>
-  </NavDropdown>
+const tanmayImages: React.ReactNode = <Nav.Link href="https://www.google.com/search?tbm=isch&q=tanmay+bansal">Google search of "tanmay bansal"</Nav.Link>;
 
+const important: React.ReactNode = <Nav.Link href="https://data.whicdn.com/images/321678488/original.jpg">Important</Nav.Link>;
 
 class Main extends React.Component {
 
   render() {
-    return <MainBase NavbarItems={[navbarTutorialDropdown]}>
+    return <MainBase NavbarItems={[tanmayImages, important]}>
       <div>
         <h3>Below is some markdown rendered by React!</h3>
         <Markdown src_fpath={webconfig.template_link("test.md")} />

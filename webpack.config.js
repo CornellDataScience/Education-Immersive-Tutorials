@@ -86,7 +86,9 @@ const config = {
         ])
     ],
     entry: {
-        index: __dirname + '/src/ts/app.tsx'
+        index: __dirname + '/src/ts/app.tsx',
+        networkAnalysis: __dirname + '/src/projects/networkAnalysis/ts/app.tsx',
+        SVM: __dirname + '/src/projects/SVM/ts/app.tsx',
     },
     output: {
         path: __dirname + '/dist/',

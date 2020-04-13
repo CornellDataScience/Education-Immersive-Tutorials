@@ -1,7 +1,8 @@
 import React from 'react';
-import { Navbar, Nav } from 'react-bootstrap';
-import webconfig from '@Main/ts/constants/webconfig';
+import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
+import webconfig from './constants/webconfig';
 import * as stylesMain from '../styles/main.css';
+import { Project } from './constants/crossProjectInfo';
 
 export type MainBaseProps = {
   /**
@@ -13,6 +14,12 @@ export type MainBaseProps = {
   NavbarItems: React.ReactNode[];
 }
 
+const navbarTutorialDropdown: React.ReactNode =
+  <NavDropdown id="navbar-tutorial-dropdown" title="Tutorials" key="navbar-tutorial-dropdown">
+    <NavDropdown.Item key="navbar-tutorial-dropdown-svm" href={webconfig.template_link(Project.SVM)}>Support Vector Machines</NavDropdown.Item>
+    <NavDropdown.Item key="navbar-tutorial-dropdown-network" href={webconfig.template_link(Project.Network)}>Network Analysis</NavDropdown.Item>
+  </NavDropdown>
+
 export class MainNavbar extends React.Component<{ id: string }> {
 
   render() {
@@ -21,6 +28,7 @@ export class MainNavbar extends React.Component<{ id: string }> {
         <image className={stylesMain["navbar-logo"]}>[insertlogo]</image>
         CDS Education <b>Immersive Tutorials</b>
       </Navbar.Brand>
+      {navbarTutorialDropdown}
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">

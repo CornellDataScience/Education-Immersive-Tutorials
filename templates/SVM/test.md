@@ -14,4 +14,12 @@ Underscores need to be escaped, like this: \_
 
 [This is a link to the homepage](http://0.0.0.0:8000)
 
-[This is a link to the Network main page](http://0.0.0.0:8000/networkAnalysis.html)
+[This is a link to the Network main page](http://0.0.0.0:8000/networkanalysis.html)
+
+
+
+And now below is a gif:
+
+![alt text](http://0.0.0.0:8000/assets/svm/rockyourbody.gif "Title")
+
+

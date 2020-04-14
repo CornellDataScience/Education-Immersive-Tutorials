@@ -9,9 +9,9 @@ const react_dom_1 = __importDefault(require("react-dom"));
 const markdown_1 = __importDefault(require("./markdown"));
 const webconfig_1 = __importDefault(require("./constants/webconfig"));
 const mainBase_1 = __importDefault(require("./mainBase"));
-const react_bootstrap_1 = require("react-bootstrap");
-const tanmayImages = react_1.default.createElement(react_bootstrap_1.Nav.Link, { href: "https://www.google.com/search?tbm=isch&q=tanmay+bansal" }, "Google search of \"tanmay bansal\"");
-const important = react_1.default.createElement(react_bootstrap_1.Nav.Link, { href: "https://data.whicdn.com/images/321678488/original.jpg" }, "Important");
+const Nav_1 = __importDefault(require("react-bootstrap/Nav"));
+const tanmayImages = react_1.default.createElement(Nav_1.default.Link, { href: "https://www.google.com/search?tbm=isch&q=tanmay+bansal" }, "Google search of \"tanmay bansal\"");
+const important = react_1.default.createElement(Nav_1.default.Link, { href: "https://data.whicdn.com/images/321678488/original.jpg" }, "Important");
 class Main extends react_1.default.Component {
     render() {
         return react_1.default.createElement(mainBase_1.default, { NavbarItems: [tanmayImages, important] },

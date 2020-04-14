@@ -11,24 +11,28 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = __importDefault(require("react"));
-const react_bootstrap_1 = require("react-bootstrap");
+// import { Navbar, Nav, NavDropdown } from 'react-bootstrap/lib/Navbar';
+const Navbar_1 = __importDefault(require("react-bootstrap/Navbar"));
+const Nav_1 = __importDefault(require("react-bootstrap/Nav"));
+const NavDropdown_1 = __importDefault(require("react-bootstrap/NavDropdown"));
 const webconfig_1 = __importDefault(require("./constants/webconfig"));
-const stylesMain = __importStar(require("../styles/main.css"));
+const stylesMain = __importStar(require("../styles/main.css")); //'../styles/main.css'; //'../styles/main.css';
 const crossProjectInfo_1 = require("./constants/crossProjectInfo");
-const navbarTutorialDropdown = react_1.default.createElement(react_bootstrap_1.NavDropdown, { id: "navbar-tutorial-dropdown", title: "Tutorials", key: "navbar-tutorial-dropdown" },
-    react_1.default.createElement(react_bootstrap_1.NavDropdown.Item, { key: "navbar-tutorial-dropdown-svm", href: webconfig_1.default.template_link(crossProjectInfo_1.Project.SVM) }, "Support Vector Machines"),
-    react_1.default.createElement(react_bootstrap_1.NavDropdown.Item, { key: "navbar-tutorial-dropdown-network", href: webconfig_1.default.template_link(crossProjectInfo_1.Project.Network) }, "Network Analysis"));
+const react_image_1 = __importDefault(require("react-image"));
+const navbarTutorialDropdown = react_1.default.createElement(NavDropdown_1.default, { id: "navbar-tutorial-dropdown", title: "Tutorials", key: "navbar-tutorial-dropdown" },
+    react_1.default.createElement(NavDropdown_1.default.Item, { key: "navbar-tutorial-dropdown-svm", href: webconfig_1.default.template_link(crossProjectInfo_1.Project.SVM) }, "Support Vector Machines"),
+    react_1.default.createElement(NavDropdown_1.default.Item, { key: "navbar-tutorial-dropdown-network", href: webconfig_1.default.template_link(crossProjectInfo_1.Project.Network) }, "Network Analysis"));
 class MainNavbar extends react_1.default.Component {
     render() {
-        return react_1.default.createElement(react_bootstrap_1.Navbar, { bg: "light", expand: "lg", id: this.props.id ? this.props.id : "main-navbar" },
-            react_1.default.createElement(react_bootstrap_1.Navbar.Brand, { href: webconfig_1.default.template_link() },
-                react_1.default.createElement("image", { className: stylesMain["navbar-logo"] }, "[insertlogo]"),
+        return react_1.default.createElement(Navbar_1.default, { bg: "light", expand: "lg", id: this.props.id ? this.props.id : "main-navbar" },
+            react_1.default.createElement(Navbar_1.default.Brand, { href: webconfig_1.default.template_link() },
+                react_1.default.createElement(react_image_1.default, { className: stylesMain["main-navbar-logo"], src: webconfig_1.default.asset_link("cds-logo.png") }),
                 "CDS Education ",
                 react_1.default.createElement("b", null, "Immersive Tutorials")),
             navbarTutorialDropdown,
-            react_1.default.createElement(react_bootstrap_1.Navbar.Toggle, { "aria-controls": "basic-navbar-nav" }),
-            react_1.default.createElement(react_bootstrap_1.Navbar.Collapse, { id: "basic-navbar-nav" },
-                react_1.default.createElement(react_bootstrap_1.Nav, { className: "mr-auto" }, this.props.children)));
+            react_1.default.createElement(Navbar_1.default.Toggle, { "aria-controls": "basic-navbar-nav" }),
+            react_1.default.createElement(Navbar_1.default.Collapse, { id: "basic-navbar-nav" },
+                react_1.default.createElement(Nav_1.default, { className: "mr-auto" }, this.props.children)));
     }
 }
 exports.MainNavbar = MainNavbar;

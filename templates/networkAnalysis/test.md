@@ -14,4 +14,4 @@ Underscores need to be escaped, like this: \_
 
 [This is a link to the homepage](http://0.0.0.0:8000)
 
-[This is a link to the SVM main page](http://0.0.0.0:8000/SVM.html)
+[This is a link to the SVM main page](http://0.0.0.0:8000/svm.html)

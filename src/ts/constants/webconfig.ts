@@ -1,7 +1,7 @@
 import { Project, isAProject } from './crossProjectInfo'
 
-let base_url = process.env.NODE_ENV == "production" ?
-  "https://dylantsai.github.io/bookish-journey"
+let base_url = process.env.NODE_ENV == "production"
+  ? "https://cornelldatascience.github.io/Education-Immersive-Tutorials"
   : "http://0.0.0.0:8000"
 
 

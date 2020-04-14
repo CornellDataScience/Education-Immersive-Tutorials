@@ -15,6 +15,7 @@ const config = {
         use: ["css-loader"] // dummy, result isn't used
       }
     ]
-  }
+  },
+  performance: { hints: false }
 };
 module.exports = config;

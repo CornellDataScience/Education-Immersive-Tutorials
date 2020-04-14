@@ -146,5 +146,13 @@ const config = {
             }
         ]
     },
+    performance: {
+        hints: 'error',
+        maxEntrypointSize: 5000000,
+        maxAssetSize: 10000000, // anything bigger than 10MB should be sized down or hosted elsewhere
+        assetFilter: function (assetFilename) {
+            return !(/\.map$/.test(assetFilename)) && !(/-standalone./.test(assetFileName));
+        }
+    }
 };
 module.exports = config;

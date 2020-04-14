@@ -70,6 +70,7 @@ You should use 0.0.0.0:8000, not localhost:8000. Using localhost will cause link
 
 - Two import shortcuts are set up: @Main and @Projects. @Main points to src and @Projects points to src/projects. So, when importing in Typescript, you can do something like `import webconfig from @Main/ts/webconfig"`. Instead of using a huge relative path.
 - Aside from `npm run build` and `npm run build-fast`, and `npm run deploy`, there is one more command: `npm run build-fast`. This skips CSS files and also skips Typescript integration, and therefore is about twice as fast as `npm run build`. It's good for checking how small changes affect the webpage on localhost. Always use full `npm run build` when pulling changes from Github and before pushing changes to Github.
+- Loading time can be important as we make our tutorials more advanced, so `npm run deploy` throws an error if it finds an asset greater than 5 megabytes. If you really want to keep this file, change its name to end with "-standalone". For example, "SVMLecture.mov" --> "SVMLecture-standalone.mov". That name suffix implies that these assets should be "standalone" in the sense that they are to be downloaded, or on their own page on the site -- not embedded in a page with other important content. (We also disallow sourcefiles greater than 2MB, but it's unlikely that we'll ever hit that limit).
 
 # Creating a new tutorial project
 - Add a folder to src/projects, with the 4 required folders.

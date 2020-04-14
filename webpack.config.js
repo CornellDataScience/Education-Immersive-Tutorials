@@ -33,19 +33,36 @@ function transform_md(content) {
     return content.toString().replace(/{{[\s]+([^\s]+)[\s]+([^\s]+)[\s]+([^\s]+)[\s]+}}/g, make_path);
 }
 
+function transform_html(content) {
+    return content.toString().replace(/{{[\s]+head[\s]+}}/, `
+        <meta charset="UTF-8">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap" rel="stylesheet">
+        <link
+            rel="stylesheet"
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+            integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+            crossorigin="anonymous"
+        />
+        <link rel="shortcut icon" type="image/x-icon" href="${base_url}/assets/main/cds-logo.png">
+    `);
+}
+
 const config = {
     plugins: [
         new MiniCssExtractPlugin(),
         new CopyPlugin([
-            {
-                // copy favicon
-                from: __dirname + "/" + path_to_favicon,
-                to: __dirname + '/dist/favicon.ico'
-            },
+            // {
+            //     // copy favicon
+            //     from: __dirname + "/" + path_to_favicon,
+            //     to: __dirname + '/dist/favicon.ico'
+            // },
             {
                 // copy main html file
                 from: __dirname + '/src/templates/*.html',
                 to: __dirname + '/dist/[name].html',
+                transform(content, path) {
+                    return transform_html(content);
+                }
             },
             {
                 // copy main md files 
@@ -64,13 +81,19 @@ const config = {
                 // copy project index.html
                 from: "src/projects/*/templates/index.html",
                 to: __dirname + '/dist/[1].html',
-                test: /src\/projects\/(.+)\/templates\/index.html/
+                test: /src\/projects\/(.+)\/templates\/index.html/,
+                transform(content, path) {
+                    return transform_html(content);
+                }
             },
             {
                 // copy other project html
                 from: "src/projects/*/templates/**/*.html",
                 to: __dirname + '/dist/[1]/[name].html',
-                test: /src\/projects\/(.+)\/templates/
+                test: /src\/projects\/(.+)\/templates/,
+                transform(content, path) {
+                    return transform_html(content);
+                }
             },
             {
                 // copy project md files
@@ -148,10 +171,10 @@ const config = {
     },
     performance: {
         hints: 'error',
-        maxEntrypointSize: 2000000,
-        maxAssetSize: 5000000, // anything bigger than 10MB should be sized down or hosted elsewhere
-        assetFilter: function (assetFilename) {
-            return !(/\.map$/.test(assetFilename)) && !(/-standalone./.test(assetFileName));
+        maxEntrypointSize: 5000000,
+        maxAssetSize: 10000000, // anything bigger than 10MB should be sized down or hosted elsewhere
+        assetFilter: function (assetFileName) {
+            return !(/\.map$/.test(assetFileName)) && !(/-standalone./.test(assetFileName));
         }
     }
 };

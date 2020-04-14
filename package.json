@@ -4,13 +4,13 @@
   "main": "src/ts/app.tsx",
   "repository": "https://github.com/CornellDataScience/Education-Immersive-Tutorials",
   "scripts": {
-    "build": "webpack -d --progress --config css_webpack.config.js && tsc && webpack -d --progress --config webpack.config.js",
-    "build-fast": "webpack --progress -d --config webpack.config.js",
-    "build-css": "webpack --progress -d --config css_webpack.config.js",
+    "build": "webpack -d --progress --env.NODE_ENV=development --config css_webpack.config.js && tsc && webpack -d --env.NODE_ENV=development --progress --config webpack.config.js",
+    "build-fast": "webpack --progress -d --env.NODE_ENV=development --config webpack.config.js",
+    "build-css": "webpack --progress -d --env.NODE_ENV=development --config css_webpack.config.js",
     "stats": "webpack --profile --json > stats.json",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "webpack -d --progress --config css_webpack.config.js --watch && webpack -d --progress --config webpack.config.js --watch",
-    "predeploy": "webpack -p --progress --config css_webpack.config.js && tsc && webpack -p --progress --config webpack.config.js",
+    "watch": "webpack --env.NODE_ENV=development -d --progress --config css_webpack.config.js --watch && webpack -d --env.NODE_ENV=development --progress --config webpack.config.js --watch",
+    "predeploy": "webpack -p --env.NODE_ENV=production --progress --config css_webpack.config.js && tsc && webpack -p --env.NODE_ENV=production --progress --config webpack.config.js",
     "deploy": "gh-pages -d dist"
   },
   "author": "",

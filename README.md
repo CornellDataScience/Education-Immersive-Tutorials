@@ -37,7 +37,7 @@ One final note: Every `templates` directory should have an `index.html`. This in
 ### Webpage links
 
 - Always use `make_template_path` and `make_asset_path` to get the links to other files in the repo. These functions are in `src/constants/webconfig`, and take in parameters for the file name of the resource you want and hte project it resides under. In your html files, don't reference any other files aside from `js/index.bundle.js`; do that in Typescript/React, so you cna use those functions.
-- In Markdown files, write `{{ <template|asset> <projectFolderName> <fileName> }}`. This is equivalent to using `make_template_path` or `make_asset_path` in Typescript, but the syntax and parameters in Markdown are not as flexible.
+- In Markdown files, write `{{ <template|asset> <projectFolderName> <fileName> }}`. This is equivalent to using `make_template_path` or `make_asset_path` in Typescript, but be careful to follow that exact syntax. Capitalization in projectFolderName and fileName matter!).
 - src/projects/{ project name }/templates/index.html is located at { base url }/{ project name }.html. src/projects/{ project name }/templates/{ file name }.html is located at { base url }/{ project name }/{file name}.html
 
 ### Local deployment

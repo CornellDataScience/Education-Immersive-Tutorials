@@ -15,3 +15,11 @@ Underscores need to be escaped, like this: \_
 [This is a link to the homepage]({{ template main index.html }})
 
 [This is a link to the Network main page]({{ template networkAnalysis index.html }})
+
+
+
+And now below is a gif:
+
+![alt text]({{ asset SVM rockyourbody.gif }} "Title")
+
+

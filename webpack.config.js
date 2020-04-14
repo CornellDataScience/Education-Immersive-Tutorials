@@ -7,12 +7,15 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const path_to_favicon = "src/assets/cds-logo.png";
 
 const base_url = process.env.NODE_ENV == "production" ?
-    "https://dylantsai.github.io/bookish-journey"
+    "https://cornelldatascience.github.io/Education-Immersive-Tutorials"
     : "http://0.0.0.0:8000"
 
 // matches webconfig.ts! If you change this, change webconfig.ts
 function make_path(match, templateOrAsset, project, fileNameWithExtension) {
-    if (templateOrAsset == "asset") {
+    // more lenient here than webconfig.ts, since we can't use Typescript to help us in markdown
+    templateOrAsset = templateOrAsset.toLowerCase();
+    project = project.toLowerCase();
+    if (templateOrAsset == "asset" || templateOrAsset == "assets") {
         return `${base_url}/assets/${project}/${fileNameWithExtension}`;
     }
     // make and return url
@@ -97,16 +100,17 @@ const config = {
         filename: 'js/[name].bundle.js',
     },
     optimization: {
-        splitChunks: {
-            cacheGroups: {
-                commons: {
-                    test: /[\\/]node_modules[\\/]/,
-                    name: 'vendors',
-                    chunks: 'all',
-                    // maxSize: 500000
-                }
-            }
-        },
+        //     splitChunks: {
+        //         cacheGroups: {
+        //             commons: {
+        //                 test: /[\\/]node_modules[\\/]/,
+        //                 name: 'vendors',
+        //                 chunks: 'all',
+        //                 // maxSize: 500000
+        //             }
+        //         }
+        //     },
+        // },
         minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],
     },
     resolve: {
@@ -129,8 +133,6 @@ const config = {
                 test: /\.css$/,
                 use: [
                     { loader: "style-loader" },
-                    { loader: "css-modules-typescript-loader" },
-                    { loader: MiniCssExtractPlugin.loader },
                     { loader: "css-loader", options: { modules: true } }
                 ]
             },

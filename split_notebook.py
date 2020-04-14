@@ -19,11 +19,10 @@ def printhelp():
     Lines with "##SOLUTION" are omitted from the release.
     Lines with "##RELEASE" are omitted from the solutions.
     If the first line has nothing except "##SOLUTION", then that whole cell
-    is omitted from the release.
-    "##RELEASE" acts analogously.
+    is omitted from the release (and analogously for "##RELEASE").
     In solutions, commented out lines with "##SOLUTION" will be uncommented.
-    This means that if there's a leading "#", that "#" and the whitespace before it
-    will be omitted. If there is a space after the "#", then exactly that one space
+    * This means that if there's a leading "#", then that "#" and the whitespace before it
+    will be omitted. If there is a space after the "#", then that one space
     will also be omitted. Be sure to format your comments so that this results in correct 
     Python indentation. (Using ctrl+'/' to comment out lines works well.) 
 
@@ -158,7 +157,7 @@ def strip_ctrlStrs_and_uncomment(cell: List[str], ctrlStrs: Dict[str,bool]):
         ret[i] = uncomment(line[:ctrlStrStart] + line[ctrlStrEnd:])
   return ret
 
-def delete_output_ctrlStr_inplace_and_ret_whether_it_existed(cell: List[str], ctrlStr: List[str]):
+def delete_output_ctrlStr_inplace_and_ret_whether_it_existed(cell: List[str], ctrlStr: str):
   ## also removes applied ctrlStr if it exists!
   line_idx = len(cell) - 1
   while line_idx >= 0 and len(cell):

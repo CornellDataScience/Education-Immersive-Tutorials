@@ -4,8 +4,9 @@ import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import webconfig from './constants/webconfig';
-import * as stylesMain from '../styles/main.css';
+import * as stylesMain from '../styles/main.css' //'../styles/main.css'; //'../styles/main.css';
 import { Project } from './constants/crossProjectInfo';
+import Image from 'react-image'
 
 export type MainBaseProps = {
   /**
@@ -28,7 +29,7 @@ export class MainNavbar extends React.Component<{ id: string }> {
   render() {
     return <Navbar bg="light" expand="lg" id={this.props.id ? this.props.id : "main-navbar"}>
       <Navbar.Brand href={webconfig.template_link()}>
-        <image className={stylesMain["navbar-logo"]}>[insertlogo]</image>
+        <Image className={stylesMain["main-navbar-logo"]} src={webconfig.asset_link("cds-logo.png")} />
         CDS Education <b>Immersive Tutorials</b>
       </Navbar.Brand>
       {navbarTutorialDropdown}

@@ -7,3 +7,4 @@ src/static/dist
 dist/
 **.*/.ipynb_checkpoints/
 stats.json
+**/.mypy_cache/

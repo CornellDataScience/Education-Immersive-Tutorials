@@ -1,22 +1,20 @@
 const webpack = require('webpack');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const entry = require('webpack-glob-entry')
-
+const entry = require('webpack-glob-entry');
+const { TypedCssModulesPlugin } = require('typed-css-modules-webpack-plugin');
 const config = {
+  entry: __dirname + "/src/styles/main.css", // dummy entrypoint -- could be any css file
   plugins: [
-    new MiniCssExtractPlugin(),
+    new TypedCssModulesPlugin({
+      globPattern: __dirname + "/src/**/styles/**/*.css"
+    }),
   ],
-  entry: entry(__dirname + "/src/**/styles/**/*.css"),
   module: {
     rules: [
       {
         test: /\.css$/,
-        use: [
-          { loader: "@teamsupercell/typings-for-css-modules-loader" },
-          { loader: "css-loader", options: { modules: true } }
-        ]
+        use: ["css-loader"] // dummy, result isn't used
       }
     ]
-  },
+  }
 };
 module.exports = config;

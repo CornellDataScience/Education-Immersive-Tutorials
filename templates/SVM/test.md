@@ -14,12 +14,12 @@ Underscores need to be escaped, like this: \_
 
 [This is a link to the homepage](https://cornelldatascience.github.io/Education-Immersive-Tutorials)
 
-[This is a link to the Network main page](https://cornelldatascience.github.io/Education-Immersive-Tutorials/networkanalysis.html)
+[This is a link to the Network main page](https://cornelldatascience.github.io/Education-Immersive-Tutorials/networkAnalysis.html)
 
 
 
 And now below is a gif:
 
-![alt text](https://cornelldatascience.github.io/Education-Immersive-Tutorials/assets/svm/rockyourbody.gif "Title")
+![alt text](https://cornelldatascience.github.io/Education-Immersive-Tutorials/assets/SVM/rockyourbody.gif "Title")
 
 

@@ -14,4 +14,4 @@ Underscores need to be escaped, like this: \_
 
 [This is a link to the homepage](https://cornelldatascience.github.io/Education-Immersive-Tutorials)
 
-[This is a link to the SVM main page](https://cornelldatascience.github.io/Education-Immersive-Tutorials/svm.html)
+[This is a link to the SVM main page](https://cornelldatascience.github.io/Education-Immersive-Tutorials/SVM.html)

@@ -8,7 +8,7 @@ def printhelp():
   1. sourceFile: the source notebook
   2. releaseOutputFolder: the release notebook will be put into releaseOutputFolder.
   3. solutionOutputFolder: the release solution will be put into solutionOutputFolder.
-    If not specified, this will go into solutionOutputFolder.
+  4. (optional) maintainMarkdown: see below
 
   There are three control strings, which define what goes into release vs solution.
   They have the format "##CTRLSTR" where CTRLSTR is "RELEASE", "SOLUTION", or 
@@ -21,10 +21,11 @@ def printhelp():
     If the first line has nothing except "##SOLUTION", then that whole cell
     is omitted from the release (and analogously for "##RELEASE").
     In solutions, commented out lines with "##SOLUTION" will be uncommented.
-    * This means that if there's a leading "#", then that "#" and the whitespace before it
-    will be omitted. If there is a space after the "#", then that one space
-    will also be omitted. Be sure to format your comments so that this results in correct 
-    Python indentation. (Using ctrl+'/' to comment out lines works well.) 
+    * This means that if there's a leading "#", then that "#" will be omitted.
+    If the character directly after the "#" is a whitespace, then that one 
+    whitespace will also be omitted. Be sure to format your comments so that 
+    this results in correct Python indentation. (Using ctrl+'/' to comment out 
+    lines in Jupyter Notebook works well.) 
 
   CLEAR OUTPUT: 
     Omits cell output from **release**. Does not omit output from solution.
@@ -40,12 +41,16 @@ def printhelp():
       - "##CLEAROUTPUT"
       - "## CLEAROUTPUT"
       - "     ##     CLEAR    OUTPUT    "
-      The exception is markdown cells. See 5 below.
-  5. control strings apply to markdown cells, with a catch: there can't be any 
-     whitespace between "##" and "CLEAR OUTPUT". So, only "##CLEAROUTPUT",
-     "##CLEAR   OUTPUT", etc. are acceptable.
-     This is because markdown treats the pattern "## anytext", with the whitespace,
-     specially.
+      The exception is markdown cells, with a special setting. See 5 below.
+  5. control strings apply to markdown cells. But what if you want "## Solution"
+     to render as a header saying Solution? That would be considered a control 
+     tag and taken out. The solution is the --safe option. If you pass in "maintainMarkdown"
+     as the last argument, then the script will only USE "##RELEASE", "##SOLUTION",
+     and "##CLEAROUTPUT" as control tags in markdown cells (notice no space 
+     after the pound signs). "##CLEAR OUTPUT" and "##CLEAR    OUTPUT" will still
+     be considered control tags.
+     Unfortunately, if you want to pass in maintainMarkdown, then you'll have
+     to explicitly supply the solutionOutputFolder.
   6. You can use double pounds to make a comment in a control string line. For example,
                   RAW                                RELEASE
       "# this will become code ## RELEASE" -> "this will become code"
@@ -61,6 +66,7 @@ SOLUTION_PAT = r'##\s*SOLUTION'
 SOLUTION_PAT_MARKDOWN = r'##SOLUTION'
 REMOVE_RELEASE_OUTPUT_PAT = r'##\s*CLEAR\s*OUTPUT'
 REMOVE_RELEASE_OUTPUT_PAT_MARKDOWN = r'##CLEAR\s*OUTPUT'
+maintain_markdown = False
 
 import json
 from copy import deepcopy
@@ -108,23 +114,27 @@ class JupyterNotebook:
 def uncomment(line: str):
   if re.match(r'\s*#', line, re.IGNORECASE) is None:
     return line
-  last_pound = -2
-  i = 0
-  while i < len(line):
-    if not line[i].isspace():
-      if line[i] == "#":
-        if i == last_pound + 1:
-          break
-        else:
-          last_pound = i
-      else:
-        break
-    i += 1
-  if last_pound < 0:
-    return line
-  if last_pound + 1 < len(line) and line[last_pound+1] == " ":
-    return line[last_pound+2:]
-  return line[last_pound+1:]
+  poundIdx = line.index("#")
+  if line[poundIdx + 1].isspace():
+    return line[:poundIdx] + (line[poundIdx+2:] if poundIdx+2 < len(line) else "")
+  return line[:poundIdx] + (line[poundIdx+1:] if poundIdx+1 < len(line) else "")
+  # last_pound = -2
+  # i = 0
+  # while i < len(line):
+  #   if not line[i].isspace():
+  #     if line[i] == "#":
+  #       if i == last_pound + 1:
+  #         break
+  #       else:
+  #         last_pound = i
+  #     else:
+  #       break
+  #   i += 1
+  # if last_pound < 0:
+  #   return line
+  # if last_pound + 1 < len(line) and line[last_pound+1] == " ":
+  #   return line[last_pound+2:]
+  # return line[last_pound+1:]
 
 def ctrlStr_applies_to_whole_cell(cell: List[str], ctrlStr: str):
   if len(cell) == 0:
@@ -173,10 +183,11 @@ def delete_output_ctrlStr_inplace_and_ret_whether_it_existed(cell: List[str], ct
 
 def makeRelease(nb: JupyterNotebook, fout: str):
   for cellId, cellTypeAndSrc in nb.cellSources().items():
-    sol_pat = SOLUTION_PAT_MARKDOWN if cellTypeAndSrc[0] == "markdown" else SOLUTION_PAT
-    release_pat = RELEASE_PAT_MARKDOWN if cellTypeAndSrc[0] == "markdown" else RELEASE_PAT
-    remove_output_pat = REMOVE_RELEASE_OUTPUT_PAT_MARKDOWN if cellTypeAndSrc[0] == "markdown" else REMOVE_RELEASE_OUTPUT_PAT
-    cell = cellTypeAndSrc[0]
+    shouldUseAlternativePat = cellTypeAndSrc[0] == "markdown" and maintain_markdown
+    sol_pat = SOLUTION_PAT_MARKDOWN if shouldUseAlternativePat else SOLUTION_PAT
+    release_pat = RELEASE_PAT_MARKDOWN if shouldUseAlternativePat else RELEASE_PAT
+    remove_output_pat = REMOVE_RELEASE_OUTPUT_PAT_MARKDOWN if shouldUseAlternativePat else REMOVE_RELEASE_OUTPUT_PAT
+    cell = cellTypeAndSrc[1]
     if ctrlStr_applies_to_whole_cell(cell, sol_pat):
       nb.remove(cellId)
     else:
@@ -193,9 +204,10 @@ def makeRelease(nb: JupyterNotebook, fout: str):
   
 def makeSolution(nb: JupyterNotebook, fout: str):
   for cellId, cellTypeAndSrc in nb.cellSources().items():
-    sol_pat = SOLUTION_PAT_MARKDOWN if cellTypeAndSrc[0] == "markdown" else SOLUTION_PAT
-    release_pat = RELEASE_PAT_MARKDOWN if cellTypeAndSrc[0] == "markdown" else RELEASE_PAT
-    remove_output_pat = REMOVE_RELEASE_OUTPUT_PAT_MARKDOWN if cellTypeAndSrc[0] == "markdown" else REMOVE_RELEASE_OUTPUT_PAT
+    shouldUseAlternativePat = cellTypeAndSrc[0] == "markdown" and maintain_markdown
+    sol_pat = SOLUTION_PAT_MARKDOWN if shouldUseAlternativePat else SOLUTION_PAT
+    release_pat = RELEASE_PAT_MARKDOWN if shouldUseAlternativePat else RELEASE_PAT
+    remove_output_pat = REMOVE_RELEASE_OUTPUT_PAT_MARKDOWN if shouldUseAlternativePat else REMOVE_RELEASE_OUTPUT_PAT
     cell = cellTypeAndSrc[1]
     if ctrlStr_applies_to_whole_cell(cell, release_pat):
       nb.remove(cellId)
@@ -224,12 +236,14 @@ fin_name = fin_name[:fin_name.index(".")]
 releaseDirOut = sys.argv[2]
 if releaseDirOut[-1] != "/":
   releaseDirOut += "/"
-if len(sys.argv) >= 3:
+if len(sys.argv) > 3:
   solDirOut = sys.argv[3]
   if solDirOut[-1] != "/":
     solDirOut += "/"
 else:
   solDirOut = releaseDirOut
+
+maintain_markdown = len(sys.argv) > 4 and sys.argv[3].lower() == "maintainmarkdown"
 
 nb = JupyterNotebook(fpath=fin)
 makeRelease(nb.copy(),releaseDirOut+fin_name+"_Release.ipynb")

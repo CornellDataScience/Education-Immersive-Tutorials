@@ -1,0 +1,17 @@
+.explanations {
+  height: 400px;
+  
+}
+
+.container {
+  background-color: black;
+}
+
+.footer {
+  padding: 20px;
+}
+
+.whitetext {
+  color: white;
+  flex: 1;
+}

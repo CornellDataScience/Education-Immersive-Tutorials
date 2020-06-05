@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.FileNameToProject = exports.isAProject = exports.Project = void 0;
 var Project;
 (function (Project) {
     Project["SVM"] = "SVM";

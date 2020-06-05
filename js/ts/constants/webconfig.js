@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.make_asset_path = exports.make_template_path = void 0;
 const crossProjectInfo_1 = require("./crossProjectInfo");
 let base_url = process.env.NODE_ENV == "production"
     ? "https://cornelldatascience.github.io/Education-Immersive-Tutorials"

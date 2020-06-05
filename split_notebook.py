@@ -5,10 +5,11 @@ def printhelp():
   and a solution version. If your file is "lec2.ipynb", this script will produce
   "lec2_Release.ipynb" and "lec2_Solution.ipynb"
   script inputs:
-  1. sourceFile: the source notebook
-  2. releaseOutputFolder: the release notebook will be put into releaseOutputFolder.
-  3. solutionOutputFolder: the release solution will be put into solutionOutputFolder.
-  4. (optional) maintainMarkdown: see below
+  1. hashSeed: the seed for this notebook's hash
+  2. sourceFile: the source notebook
+  3. releaseOutputFolder: the release notebook will be put into releaseOutputFolder.
+  4. solutionOutputFolder: the release solution will be put into solutionOutputFolder.
+  5. (optional) maintainMarkdown: see below
 
   There are three control strings, which define what goes into release vs solution.
   They have the format "##CTRLSTR" where CTRLSTR is "RELEASE", "SOLUTION", or 
@@ -67,6 +68,8 @@ SOLUTION_PAT_MARKDOWN = r'##SOLUTION'
 REMOVE_RELEASE_OUTPUT_PAT = r'##\s*CLEAR\s*OUTPUT'
 REMOVE_RELEASE_OUTPUT_PAT_MARKDOWN = r'##CLEAR\s*OUTPUT'
 maintain_markdown = False
+release_watermark=""
+solution_watermark=""
 
 import json
 from copy import deepcopy
@@ -89,9 +92,10 @@ class JupyterNotebook:
   def copy(self):
     return JupyterNotebook(dct=deepcopy(self.dat),num_orig_cells=self.num_orig_cells)
 
-  def export(self, fpath: str):
+  def export(self, fpath: str, watermark: str):
     final = {k:v for k,v in self.dat.items() if k != "cells"}
     final["cells"] = [self.dat["cells"][i] for i in range(self.num_orig_cells) if i in self.dat["cells"]]
+    final["metadata"]["notebookId"] = watermark;
     with open(fpath, "w+") as fp:
       json.dump(final, fp, indent="    ")
 
@@ -200,7 +204,7 @@ def makeRelease(nb: JupyterNotebook, fout: str):
         remove_output_pat: False
       })
       nb.setSource(cellId,cell)
-  nb.export(fout)
+  nb.export(fout,release_watermark)
   
 def makeSolution(nb: JupyterNotebook, fout: str):
   for cellId, cellTypeAndSrc in nb.cellSources().items():
@@ -219,7 +223,7 @@ def makeSolution(nb: JupyterNotebook, fout: str):
         remove_output_pat: False
       })
       nb.setSource(cellId,cell)
-  nb.export(fout)
+  nb.export(fout, solution_watermark)
 
 
 import sys
@@ -227,24 +231,38 @@ if sys.argv[1].lower() == "help":
   printhelp()
   exit(0)
 
-fin = sys.argv[1]
+def makeWatermark(releaseOrSolution: str):
+    pre = ''.join([chr((((ord(c)-48)*5 + 13) % 79) + 48) for c in list(sys.argv[1])])
+    add = "a" if len(sys.argv[1]) == 0 else sys.argv[1][0]
+    post = ''.join([chr((((ord(c)-48)*5 + 13 + ord(add)) % 79) + 48) for c in list(releaseOrSolution)])
+    return pre + post
+
+release_watermark = makeWatermark("release")
+solution_watermark = makeWatermark("solution")
+
+print("release watermark: " + release_watermark)
+print("solution watermark: " + solution_watermark)
+
+fin = sys.argv[2]
 import ntpath
 head, tail = ntpath.split(fin)
 fin_name = tail or ntpath.basename(head)
 fin_name = fin_name[:fin_name.index(".")]
 
-releaseDirOut = sys.argv[2]
+releaseDirOut = sys.argv[3]
 if releaseDirOut[-1] != "/":
   releaseDirOut += "/"
-if len(sys.argv) > 3:
-  solDirOut = sys.argv[3]
+if len(sys.argv) > 4:
+  solDirOut = sys.argv[4]
   if solDirOut[-1] != "/":
     solDirOut += "/"
 else:
   solDirOut = releaseDirOut
 
-maintain_markdown = len(sys.argv) > 4 and sys.argv[3].lower() == "maintainmarkdown"
+maintain_markdown = len(sys.argv) > 5 and sys.argv[5].lower() == "maintainmarkdown"
 
 nb = JupyterNotebook(fpath=fin)
+if fin_name.lower().endswith("_source"):
+  fin_name = fin_name[:-7]
 makeRelease(nb.copy(),releaseDirOut+fin_name+"_Release.ipynb")
 makeSolution(nb.copy(),solDirOut+fin_name+"_Solution.ipynb")

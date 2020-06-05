@@ -169,7 +169,7 @@ const config = env => {
             ]
         },
         performance: {
-            hints: 'error',
+            hints: 'warning',
             maxEntrypointSize: 5000000,
             maxAssetSize: 10000000, // anything bigger than 10MB should be sized down or hosted elsewhere
             assetFilter: function (assetFileName) {

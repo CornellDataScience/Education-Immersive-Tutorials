@@ -1,0 +1,30 @@
+.explanations {
+  height: 400px;
+  flex: 1;
+  overflow: auto;
+}
+
+.container {
+  background-color: black;
+}
+
+.footer {
+  padding: 20px;
+}
+
+.whitetext {
+  color: white;
+  flex: 1;
+}
+
+.hiddentext {
+  visibility: hidden;
+}
+
+.gridspacing {
+  padding-bottom: 80px;
+}
+
+.textspacing {
+  padding-top: 10px;
+}

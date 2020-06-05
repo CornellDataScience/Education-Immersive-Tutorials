@@ -52,7 +52,7 @@ export class MainFooter extends React.Component {
   render() {
     return <>
       <footer>
-        <hr />
+        {/** <hr /> */}
         <div className="pull-left">
           <div className="footer-link">
             <a href={webconfig.info1998_links.homepage}

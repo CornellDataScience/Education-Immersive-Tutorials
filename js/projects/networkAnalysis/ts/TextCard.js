@@ -8,8 +8,6 @@ const prop_types_1 = __importDefault(require("prop-types"));
 const react_highlight_js_1 = __importDefault(require("react-highlight.js/"));
 const Typography_1 = __importDefault(require("@material-ui/core/Typography"));
 const Grid_1 = __importDefault(require("@material-ui/core/Grid"));
-const Card_1 = __importDefault(require("@material-ui/core/Card"));
-const CardContent_1 = __importDefault(require("@material-ui/core/CardContent"));
 const Button_1 = __importDefault(require("@material-ui/core/Button"));
 const Code_1 = __importDefault(require("@material-ui/icons/Code"));
 const TextFields_1 = __importDefault(require("@material-ui/icons/TextFields"));
@@ -43,21 +41,21 @@ function TextCard(props) {
     const explainText = (open) => {
         if (open)
             return null;
-        return (react_1.default.createElement(Typography_1.default, { variant: "subtitle1", paragraph: true }, post.description));
+        return (react_1.default.createElement("div", null, post.description));
     };
-    return (react_1.default.createElement(Card_1.default, { className: Tutorial_module_css_1.default.explanations },
-        react_1.default.createElement(CardContent_1.default, { className: Tutorial_module_css_1.default.explanations },
-            react_1.default.createElement(Grid_1.default, { container: true, xs: 12 },
-                react_1.default.createElement(Grid_1.default, { item: true, xs: 9 },
-                    react_1.default.createElement(Typography_1.default, { component: "h2", variant: "h5" }, post.title)),
-                react_1.default.createElement(Grid_1.default, { item: true, xs: 3 },
-                    react_1.default.createElement(Button_1.default, { onClick: revealText },
-                        react_1.default.createElement(TextFields_1.default, null)),
-                    react_1.default.createElement(Button_1.default, { onClick: revealCode },
-                        react_1.default.createElement(Code_1.default, null)))),
-            react_1.default.createElement("div", { className: Tutorial_module_css_1.default.textspacing },
-                explainText(open),
-                codeText(open)))));
+    return (react_1.default.createElement("div", { className: Tutorial_module_css_1.default.explanations },
+        react_1.default.createElement(Grid_1.default, { container: true, xs: 12 },
+            react_1.default.createElement(Grid_1.default, { item: true, xs: 9 },
+                react_1.default.createElement(Typography_1.default, { component: "h2", variant: "h5" },
+                    react_1.default.createElement("b", null, post.title))),
+            react_1.default.createElement(Grid_1.default, { item: true, xs: 3 },
+                react_1.default.createElement(Button_1.default, { onClick: revealText },
+                    react_1.default.createElement(TextFields_1.default, null)),
+                react_1.default.createElement(Button_1.default, { onClick: revealCode },
+                    react_1.default.createElement(Code_1.default, null)))),
+        react_1.default.createElement("div", { className: Tutorial_module_css_1.default.textspacing },
+            explainText(open),
+            codeText(open))));
 }
 exports.default = TextCard;
 TextCard.propTypes = {

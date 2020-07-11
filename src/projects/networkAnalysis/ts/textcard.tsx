@@ -47,38 +47,35 @@ export default function TextCard(props) {
   const explainText = (open: boolean) => {
     if (open) return null;
     return (
-      <Typography variant="subtitle1" paragraph>
+      <div>
         {post.description}
-      </Typography>
+      </div>
     );
   };
   return (
-    <Card className={style.explanations} >
-
-      <CardContent className={style.explanations}>
-        <Grid container xs={12}>
-          <Grid item xs={9}>
-            <Typography component="h2" variant="h5">
-              {post.title}
-            </Typography>
-          </Grid>
-          <Grid item xs={3}>
-            <Button onClick={revealText}>
-              <TextFieldsIcon />
-            </Button>
-            <Button onClick={revealCode}>
-              <CodeIcon />
-            </Button>
-          </Grid>
+    <div className={style.explanations} >
+      <Grid container xs={12}>
+        <Grid item xs={9}>
+          <Typography component="h2" variant="h5">
+            <b>{post.title}</b>
+          </Typography>
         </Grid>
+        <Grid item xs={3}>
+          <Button onClick={revealText}>
+            <TextFieldsIcon />
+          </Button>
+          <Button onClick={revealCode}>
+            <CodeIcon />
+          </Button>
+        </Grid>
+      </Grid>
 
-        <div className={style.textspacing}>
-          {explainText(open)}
-          {codeText(open)}
+      <div className={style.textspacing}>
+        {explainText(open)}
+        {codeText(open)}
 
-        </div>
-      </CardContent>
-    </Card >
+      </div>
+    </div >
   );
 }
 

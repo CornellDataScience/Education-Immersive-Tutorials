@@ -1,11 +1,21 @@
 .explanations {
-  height: 400px;
+  height: 350px;
   flex: 1;
   overflow: auto;
+  margin-left: 20px;
+  width: 550px;
+}
+
+.intro {
+  min-height: 200px;
+  flex: 1;
+  overflow: auto;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 .container {
-  background-color: black;
+  background-color: white;
 }
 
 .footer {
@@ -21,10 +31,26 @@
   visibility: hidden;
 }
 
-.gridspacing {
-  padding-bottom: 80px;
-}
-
 .textspacing {
   padding-top: 10px;
+}
+
+.gridspacing {
+  padding-bottom: 60px;
+}
+
+
+.vis {
+  display: inline-block;
+  position: fixed;
+  top: 400px;
+  z-index: 1;
+  margin-left: 0;
+}
+.sections {
+  position: relative;
+  display: inline-block;
+  width: 600px;
+  top: 0px;
+  z-index: 90;
 }

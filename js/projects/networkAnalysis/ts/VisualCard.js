@@ -9,7 +9,7 @@ const Grid_1 = __importDefault(require("@material-ui/core/Grid"));
 const Tutorial_module_css_1 = __importDefault(require("@Main/projects/networkAnalysis/styles/Tutorial.module.css"));
 function VisualCard(props) {
     const { post } = props;
-    return (react_1.default.createElement(Grid_1.default, { className: Tutorial_module_css_1.default.explanations, item: true, xs: 12, md: 6 },
+    return (react_1.default.createElement(Grid_1.default, { className: Tutorial_module_css_1.default.vis, item: true, xs: 12, md: 6 },
         react_1.default.createElement("img", { src: post.image, alt: post.imageText })));
 }
 exports.default = VisualCard;

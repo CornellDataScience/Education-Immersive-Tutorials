@@ -19,6 +19,13 @@ const DAG_png_1 = __importDefault(require("@Main/projects/networkAnalysis/assets
 const Closure_png_1 = __importDefault(require("@Main/projects/networkAnalysis/assets/Closure.png"));
 const Centrality_png_1 = __importDefault(require("@Main/projects/networkAnalysis/assets/Centrality.png"));
 const Embeddedness_png_1 = __importDefault(require("@Main/projects/networkAnalysis/assets/Embeddedness.png"));
+const Homophily_png_1 = __importDefault(require("@Main/projects/networkAnalysis/assets/Homophily.png"));
+const Homophily2_png_1 = __importDefault(require("@Main/projects/networkAnalysis/assets/Homophily2.png"));
+const Propinquity_png_1 = __importDefault(require("@Main/projects/networkAnalysis/assets/Propinquity.png"));
+const Affiliation_png_1 = __importDefault(require("@Main/projects/networkAnalysis/assets/Affiliation.png"));
+const Affiliation2_png_1 = __importDefault(require("@Main/projects/networkAnalysis/assets/Affiliation2.png"));
+const Balance_png_1 = __importDefault(require("@Main/projects/networkAnalysis/assets/Balance.png"));
+const Balance2_png_1 = __importDefault(require("@Main/projects/networkAnalysis/assets/Balance2.png"));
 const Tutorial_module_css_1 = __importDefault(require("@Main/projects/networkAnalysis/styles/Tutorial.module.css"));
 const textcard_1 = __importDefault(require("@Main/projects/networkAnalysis/ts/textcard"));
 const visualcard_1 = __importDefault(require("@Main/projects/networkAnalysis/ts/visualcard"));
@@ -185,6 +192,113 @@ class Main extends react_1.default.Component {
                     react_1.default.createElement("b", null, "Real-World Relevance"),
                     react_1.default.createElement("br", null),
                     "\"A long line of research in sociology has argued that if two individuals are connected by an embedded edge, then this makes it easier for them to trust one another, and to have confidence in the integrity of the transactions (social, economic, or otherwise) that take place between them. Indeed, the presence of mutual friends puts the interactions between two people \u201Con display\u201D in a social sense, even when they are carried out in private; in the event of misbehavior by one of the two parties to the interaction, there is the potential for social sanctions and reputational consequences from their mutual friends...No similar kind of deterring threat exists for edges with zero embeddedness, since there is no one who knows both people involved in the interaction. \" (Easley and Kleinberg, 2010)."),
+            },
+            {
+                title: 'Homophily',
+                code: 'g5 = nx.Graph() \n g5.add_node(1) \n g5.add_node(2) \n g5.add_node(3) \n g5.add_node(4) \n g5.add_node(5) \n g5.add_node(6) \n g5.add_node(7) \n g5.add_edge(1, 2) \n g5.add_edge(1, 3) \n g5.add_edge(3, 2) \n g5.add_edge(5, 6) \n g5.add_edge(5, 4) \n g5.add_edge(4, 6) \n g5.add_edge(2, 7) \n g5.add_edge(3, 7) \n g5.add_edge(4, 7) \n g5.add_edge(5, 7) \n colormap = [\'r\', \'r\', \'r\', \'g\', \'g\', \'g\', \'g\'] \n nx.draw(g5, node_color=colormap, with_labels = True)',
+                image: Homophily_png_1.default,
+                description: react_1.default.createElement(Typography_1.default, null,
+                    react_1.default.createElement("b", null, "Technical Description"),
+                    react_1.default.createElement("br", null),
+                    react_1.default.createElement("b", null, "Homophily"),
+                    " in the context of social networks refers to the idea that we tend to be similar to our friends in all manners of characteristics, ranging from age, race, affluence, etc (Easely and Kleinberg 2010).",
+                    react_1.default.createElement("br", null),
+                    " ",
+                    react_1.default.createElement("br", null),
+                    " In this example, we  see that this is an easily identifiable case of homophily with the only connection between the two groups of nodes being node 7 (which connects to nodes 2 and 3). We can determine this more precisely if the fraction of heterogeneous edges is significantly ",
+                    react_1.default.createElement("b", null, "less"),
+                    " than the likelihood of a heterogeneous edge forming, then it's a case of homophily. Here, we have 2 groups (denoted as red and green) with their likelihood of appearing being 3/7 and 4/7 respectively, making the likelihood of a heterogeneous edge 2*(3/7)*(4/7) = 24/49. However, the fraction of heterogeneous edges is actually 2/10, far less than 24/49. Conversely, when the fraction of heterogeneous edges is significantly ",
+                    react_1.default.createElement("b", null, "larger"),
+                    " than the likelihood of heterogeneous edges forming, it would be ",
+                    react_1.default.createElement("b", null, "inverse homophily"),
+                    ".")
+            },
+            {
+                title: '',
+                code: 'nx.draw(g5, with_labels = True)',
+                image: Homophily2_png_1.default,
+                description: react_1.default.createElement(Typography_1.default, null,
+                    "Revisiting Triadic Closure, we can likely say that node 6 has similar characteristics as nodes 4 and 5 due to homophily, and even though nodes 4 and 5 are not connected and hypothetically don't know that they are both mutually connected with node 6, they are still very likely to be similar and even form a connection. ",
+                    react_1.default.createElement("br", null),
+                    react_1.default.createElement("br", null),
+                    react_1.default.createElement("b", null, "Real-World Relevance"),
+                    react_1.default.createElement("br", null),
+                    " You can find these relations everywhere in life, from social and political echo chambers, friend circles, parties, coworkers. Many of your friends or coworkers will probably share similar socio-political values as you or share the same income bracket or same age etc. This is by no means a hard rule but simply highlights the fact that the chance of people forming connections is most likely explained by the fact that they shared something in common to begin with. This is also a manifestation of the phrase: \"Birds of a feather, flock together\". A very interesting outcome of Homophily is with segregation. An American economist ",
+                    react_1.default.createElement("b", null, "Thomas Schelling"),
+                    " made some interesting revelations regarding this which can be found here: ",
+                    react_1.default.createElement("a", { href: "http://nifty.stanford.edu/2014/mccown-schelling-model-segregation/" }, "Schelling's Model of Segregation"))
+            },
+            {
+                title: 'Propinquity',
+                code: 'g6 = nx.Graph() \n g6.add_node(1) \n g6.add_node(2) \n g6.add_node(3) \n g6.add_node(4) \n g6.add_node(5) \n g6.add_node(6) \n g6.add_edge(1, 2) \n g6.add_edge(2, 3) \n g6.add_edge(3, 4) \n g6.add_edge(4, 5) \n g6.add_edge(5, 6) \n nx.draw(g6, node_color=range(6), cmap=plt.cm.Blues, with_labels = True)',
+                image: Propinquity_png_1.default,
+                description: react_1.default.createElement(Typography_1.default, null,
+                    react_1.default.createElement("b", null, "Technical Description"),
+                    " ",
+                    react_1.default.createElement("br", null),
+                    "In a similar vein as Homophily, ",
+                    react_1.default.createElement("b", null, "Propinquity"),
+                    " is the idea that we tend to have shared characteristics or connections with those we are in geographical proximity with. The same principles discussed in Homophily can also apply to Propinquity. As you can see from the example, the edges represent physical location and nodes closer to each other share a more similar shade of blue than those farther away, illustrating the strength of connections due to geographic location. ",
+                    react_1.default.createElement("br", null),
+                    react_1.default.createElement("br", null),
+                    react_1.default.createElement("b", null, "Real-World Relevance"),
+                    react_1.default.createElement("br", null),
+                    "Think of the friends you first made in college, most likely people who shared the same dorm right? Or even closer, the same hallway? The friends you made in your childhood/teenage years all probably lived near you as you all went to the same school/church/activities. There have also been studies that show professors collaborating more with those who share the same space/building. These ideas are just a formation of common observations we see about our circles and networks in every day life. ")
+            },
+            {
+                title: 'Affiliation',
+                code: 'from networkx.algorithms import bipartite \n g7 = nx.Graph() \n g7.add_nodes_from([\'Bob\', \'Joe\', \'Lisa\', \'Rosé\'], bipartite=0) \n g7.add_nodes_from([\'Jazz\', \'Suns\', \'Heat\'], bipartite=1) \n g7.add_edges_from([(\'Bob\', \'Heat\'), (\'Rosé\', \'Jazz\'), (\'Joe\', \'Suns\'), (\'Joe\', \'Heat\'), (\'Lisa\', \'Jazz\'), (\'Rosé\', \'Heat\')]) \n l, r = nx.bipartite.sets(g7) \n pos = {} \n pos.update((node, (1, index)) for index, node in enumerate(l)) \n pos.update((node, (2, index)) for index, node in enumerate(r)) \n nx.draw(g7, pos=pos, node_color=[\'royalblue\', \'royalblue\', \'royalblue\', \'royalblue\', \'r\', \'r\', \'r\'],node_size=[1000,1000,1000,1000,1500,1500,1500], with_labels=True)',
+                image: Affiliation_png_1.default,
+                description: react_1.default.createElement(Typography_1.default, null,
+                    react_1.default.createElement("b", null, "Technical Description"),
+                    " ",
+                    react_1.default.createElement("br", null),
+                    "So far, we have been describing the characteristics of nodes as some external factor either not shown in graphs or represented as different colors in the last few examples. In ",
+                    react_1.default.createElement("b", null, "Affiliation Networks"),
+                    ", these characteristics, also known as ",
+                    react_1.default.createElement("b", null, "foci"),
+                    ", are nodes themselves in addition to the standard nodes. These network graphs can take several forms. ",
+                    react_1.default.createElement("b", null, "Bipartite graphs"),
+                    " separate the foci from the actors/people. In this example you can see which Basketball teams in the NBA that Lisa, Ros\u00E9, Joe, and Bob are a fan of respectively.")
+            },
+            {
+                title: '',
+                code: 'g8 = nx.Graph() \n g8.add_nodes_from([\'Jen\', \'Lisa\', \'Rosé\']) \n g8.add_edges_from([(\'Jen\', \'Lisa\'), (\'Jen\', \'Rosé\')]) \n g8.add_nodes_from([\'Jerry\', \'Raye\', \'CDS\']) \n g8.add_edges_from([(\'Jerry\', \'CDS\'), (\'Raye\', \'CDS\')]) \n g8.add_nodes_from([\'Kevin\', \'Kait\', \'Tennis\']) \n g8.add_edges_from([(\'Kevin\', \'Tennis\'), (\'Kevin\', \'Kait\')]) \n pos = {\'Jen\':(1,1), \'Lisa\':(0,0), \'Rosé\':(2,0),\'Jerry\': (3,1), \'Raye\': (5,1), \'CDS\': (4,0), \'Kait\': (6,1), \'Tennis\': (8,1), \'Kevin\': (7,0)} \n nx.draw(g8, pos = pos, node_color=[\'royalblue\',\'royalblue\',\'royalblue\',\'royalblue\',\'royalblue\',\'red\',\'royalblue\',\'royalblue\',\'red\'], node_size=[1500],with_labels=True)',
+                image: Affiliation2_png_1.default,
+                description: react_1.default.createElement(Typography_1.default, null,
+                    react_1.default.createElement("b", null, "Social-Affiliation Networks"),
+                    " combine these foci and nodes into a standard network graph, displaying both relations from actors to other actors as well as actors to foci. Revisiting Triadic Closure once more, we can apply the concept onto social-affiliation networks as well. For example, traditional Triadic Closure expects that given a pair of friendships: Jen & Lisa, Jen & Ros\u00E9, we can expect that Lisa & Ros\u00E9 will become friends. When the shared connection is a foci, it is called a ",
+                    react_1.default.createElement("b", null, "Focal Closure"),
+                    ". Such is the case where Jerry and Raye are both part of Cornell Data Science and thus are likely to form a connection at some point. When the shared connection between an actor/person and a foci is an actor/person, it's called a ",
+                    react_1.default.createElement("b", null, "Membership Closure"),
+                    ". If Kevin plays tennis and is friends with Kait, there is a reasonable chance that Kevin introduces Kait to playing Tennis.")
+            },
+            {
+                title: 'Balance',
+                code: 'g9 = nx.Graph() \n plt.figure(figsize=(10,6)) \n g9.add_nodes_from([\'Jennie\', \'Lisa\', \'Rosé\']) \n g9.add_nodes_from([\'Jerry\', \'Raye\', \'Tanmay\']) \n g9.add_nodes_from([\'Emily\', \'Dylan\', \'Chris\']) \n g9.add_nodes_from([\'Kevin\', \'Peter\', \'Ethan\']) \n pos = {\'Jennie\':(1,1), \'Lisa\':(0,0), \'Rosé\':(2,0),\'Jerry\': (3,1), \'Raye\': (5,1), \'Tanmay\': (4,0), \'Emily\': (6,0), \'Dylan\': (8,0), \'Chris\': (7,1), \'Kevin\': (9,1), \'Peter\': (10,0), \'Ethan\': (11,1)} \n nx.draw_networkx_edges(g9,pos, edgelist=[(\'Jerry\',\'Tanmay\'),(\'Raye\',\'Tanmay\'),(\'Emily\',\'Dylan\'), (\'Peter\',\'Ethan\'), (\'Peter\', \'Kevin\'), (\'Kevin\', \'Ethan\')], \n width=3,alpha=0.75,edge_color=\'r\') \n nx.draw_networkx_edges(g9,pos, edgelist=[(\'Jennie\',\'Lisa\'),(\'Rosé\',\'Lisa\'),(\'Jennie\',\'Rosé\'),(\'Jerry\',\'Raye\'),(\'Chris\',\'Dylan\'),(\'Emily\',\'Chris\')], \n width=3,alpha=0.75,edge_color=\'g\') \n nx.draw(g9, pos = pos, node_color=[\'royalblue\'], node_size=[2500],with_labels=True)',
+                image: Balance_png_1.default,
+                description: react_1.default.createElement(Typography_1.default, null,
+                    react_1.default.createElement("b", null, "Technical Description"),
+                    react_1.default.createElement("br", null),
+                    "In the context of social networks, we can add further detail to edges i.e. positive (+) and negative (-) (denoted as green and red edges in our examples) relations between nodes, and due to pyschology and social dynamics, certain orientations of these relations are more plausible than others (",
+                    react_1.default.createElement("b", null, "stable/balanced"),
+                    " relationships). In life, if an ",
+                    react_1.default.createElement("b", null, "unstable/unbalanced"),
+                    " relationship exists, social forces due to stress or psychological dissonance will try to correct this. We can see in these examples that the only balanced relationships occur when all 3 people are friends or 2 people are friends and mutual enemies of a third. In the event that a person is mutual friends with two enemies then they will try and reconcile this relationship as it incurs stress upon that person (unstable). Similarly, if all 3 people are enemies then the saying \"the enemy of my enemy is my friend\" may occur and two individuals will become friends to avoid the \"Mexican Standoff\" scenario (again unstable).")
+            },
+            {
+                title: '',
+                code: 'g10 = nx.Graph() \n plt.figure(figsize=(6,5)) \n g10.add_nodes_from([\'Jennie\', \'Lisa\', \'Rosé\', \'Jisoo\']) \n pos = {\'Jennie\':(1,2), \'Lisa\':(0,0), \'Rosé\':(1,1),\'Jisoo\': (2,0)} \n nx.draw_networkx_edges(g10,pos, edgelist=[(\'Jennie\', \'Lisa\'), (\'Jennie\', \'Jisoo\'), (\'Jisoo\', \'Rosé\'), (\'Lisa\', \'Rosé\')], \n width=3,alpha=0.75,edge_color=\'r\') \n nx.draw_networkx_edges(g10,pos, edgelist=[(\'Jennie\', \'Rosé\'), (\'Jisoo\', \'Lisa\')], \n width=3,alpha=0.75,edge_color=\'g\') \n nx.draw(g10, pos = pos, node_color=[\'royalblue\'], node_size=[1500],with_labels=True)',
+                image: Balance2_png_1.default,
+                description: react_1.default.createElement(Typography_1.default, null,
+                    "From these examples we can define a formal property of a ",
+                    react_1.default.createElement("b", null, "structurally balanced"),
+                    " graph: \"For every set of three nodes, if we consider the three edges connecting them, either all three of these edges are labeled +, or else exactly one of them is labeled +\" (Easely and Kleinberg 2010). Using this, we can properly identify the example to the right as balanced.",
+                    react_1.default.createElement("br", null),
+                    react_1.default.createElement("br", null),
+                    react_1.default.createElement("b", null, "Real-World Relevance"),
+                    react_1.default.createElement("br", null),
+                    "The implications of balancing social networks is something we deal with on a daily basis, since as social creatures, we try to maintain balance as much as possible and minimize any sources of instability within our friendships. This can also be applied to relations amongst public (and potentially political) figures and foreign relations between countries.")
             },
         ];
         return react_1.default.createElement(mainBase_1.default, { NavbarItems: [] },

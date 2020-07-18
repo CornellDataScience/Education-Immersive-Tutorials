@@ -39,18 +39,11 @@
   padding-bottom: 60px;
 }
 
-
-.vis {
-  display: inline-block;
-  position: fixed;
-  top: 400px;
-  z-index: 1;
-  margin-left: 0;
-}
-.sections {
-  position: relative;
-  display: inline-block;
-  width: 600px;
-  top: 0px;
-  z-index: 90;
+.vis{
+  height: 350px;
+  flex: 1;
+  margin-left: 20px;
+  width: 550px;
+  overflow-y: hidden;
+  overflow-x: hidden;
 }

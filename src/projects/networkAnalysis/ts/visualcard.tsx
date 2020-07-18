@@ -7,7 +7,7 @@ export default function VisualCard(props) {
   const { post } = props;
 
   return (
-    <Grid className={style.explanations} item xs={12} md={6}>
+    <Grid className={style.vis} item xs={12} md={6}>
       <img src={post.image} alt={post.imageText} />
     </Grid>
   );

@@ -113,7 +113,8 @@ class JupyterNotebook:
     del self.dat["cells"][index]
   
   def removeOutput(self, index: int):
-    self.dat["cells"][index]["outputs"] = []
+    if self.dat["cells"][index]["cell_type"] == "code":
+      self.dat["cells"][index]["outputs"] = []
 
 def uncomment(line: str):
   if re.match(r'\s*#', line, re.IGNORECASE) is None:
@@ -164,12 +165,16 @@ def remove_lines_with_ctrlStr(cell: List[str], ctrlStr: str):
 # uncomments any lines with ctrlStrs
 def strip_ctrlStrs_and_uncomment(cell: List[str], ctrlStrs: Dict[str,bool]):
   ret = [line for line in cell]
+  toRemove = []
   for ctrlStr in ctrlStrs:
     for i,line in enumerate(ret):
       found, ctrlStrStart, ctrlStrEnd = ctrlStr_range(line, ctrlStr)
       if found:
-        ret[i] = uncomment(line[:ctrlStrStart] + line[ctrlStrEnd:])
-  return ret
+        if ctrlStrStart == 0 and ctrlStrEnd == len(line) - 1:
+          toRemove.append(i)
+        else:
+          ret[i] = uncomment(line[:ctrlStrStart] + line[ctrlStrEnd:])
+  return [line for i,line in enumerate(ret) if i not in toRemove]
 
 def delete_output_ctrlStr_inplace_and_ret_whether_it_existed(cell: List[str], ctrlStr: str):
   ## also removes applied ctrlStr if it exists!

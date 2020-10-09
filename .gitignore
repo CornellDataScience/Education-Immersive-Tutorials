@@ -3,8 +3,8 @@ src/static/dist
 **/node_modules/
 **/*.log
 .vscode/
-**/*.d.ts
 dist/
 **.*/.ipynb_checkpoints/
 stats.json
 **/.mypy_cache/
+src/**/*.d.ts

@@ -4,19 +4,22 @@ import ReactDOM from 'react-dom';
 import Markdown from './markdown';
 import webconfig from './constants/webconfig';
 import MainBase from './mainBase'
-import Nav from "react-bootstrap/Nav";
+import { Jumbotron, Nav, } from 'react-bootstrap';
 
-const tanmayImages: React.ReactNode = <Nav.Link href="https://www.google.com/search?tbm=isch&q=tanmay+bansal">Google search of "tanmay bansal"</Nav.Link>;
-
-const important: React.ReactNode = <Nav.Link href="https://data.whicdn.com/images/321678488/original.jpg">Important</Nav.Link>;
+const jerry: React.ReactNode = <Nav.Link href="https://www.google.com/search?tbm=isch&q=jerry+sun">Important</Nav.Link>;
 
 class Main extends React.Component {
 
   render() {
-    return <MainBase NavbarItems={[tanmayImages, important]}>
+    return <MainBase NavbarItems={[jerry]}>
       <div>
-        <h3>Below is some markdown rendered by React!</h3>
         <Markdown src_fpath={webconfig.template_link("test.md")} />
+        <Jumbotron>
+          <h1>Welcome!</h1>
+          <p>
+            This is a website containing various data science and machine learning tutorials.
+          </p>
+        </Jumbotron>
       </div>
     </MainBase>
   }

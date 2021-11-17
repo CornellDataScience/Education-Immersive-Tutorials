@@ -1,12 +1,16 @@
 /* http://getbootstrap.com/components/#navbar-fixed-top */
-/*body {
-  padding-top: calc(15vh + 10px);
-}*/
+body {
+  padding: 1%;
+}
 
 /* Prevent footer from getting squished at the bottom. */
 footer {
-  padding-top:    4%;
-  padding-bottom: 4%;
+  padding: 1%;
+}
+
+.whitetext {
+  color: white;
+  flex: 1;
 }
 
 .btn-cds:hover {
